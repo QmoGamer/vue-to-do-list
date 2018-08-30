@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>To Do List</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+      /* 对于这些在过渡中切换的类名来说，如果你使用一个没有名字的 <transition>，
+         则 v- 是这些类名的默认前缀。如果你使用了 <transition name="my-transition">，
+         那么 v-enter 会替换为 my-transition-enter。 */
+      .v-enter-active, .v-leave-active {
+        transition: opacity .5s;
+      }
+      .v-enter, .v-leave-to {
+        opacity: 0;
+      }
+    </style>
+  </head>
+  <body>    
+    <div class="card" style="max-width: 50vw; margin: 12vh auto;">
+      <div class="card-header">Vue</div>
+      <div class="card-body">
+        <div id="app">
+          <div class="form-group">
+            <label>Add to do</label>
+            <input v-model="newToDo" 
+                   @keyup.enter="addItem" 
+                   class="form-control" 
+                   placeholder="Add to do something..." />          
+          </div>
+          <div class="form-group">
+            <label>To do list</label>
+            <transition-group>
+              <div v-for="(item, index) in toDoList" 
+                   class="alert" 
+                   :class="colorList[index%6]"
+                   :key="index">
+                <strong>{{item}}</strong>
+                <button @click="removeItem(index)" type="button" class="close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+            </transition>
+            </div>
+          </div>      
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="to-do-list.js"></script>
+</html>
